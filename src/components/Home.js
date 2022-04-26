@@ -72,7 +72,8 @@ export default function Home() {
         tel:tel,
         email:email,
         career:career,
-        semester:semester
+        semester:semester,
+        photo:photo
       }
       await database.collection('students').add(newStudent)
       setStateAdd(false)
@@ -85,7 +86,8 @@ export default function Home() {
           tel:tel,
           email:email,
           career:career,
-          semester:semester
+          semester:semester,
+          photo:photo
         }
       ])
     } catch (error) {
