@@ -1,4 +1,4 @@
-import "./styles.css" 
+import "./styles.css"
 import {firebase} from '../firebase'
 import {nanoid} from 'nanoid'
 import { useEffect, useState } from "react"
@@ -19,7 +19,7 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
 export default function Home() {
 
   const [list, setList] = useState("")
-  
+
   const [id, setId] = useState(0)
   const [name, setName] = useState("")
   const [lastname, setLastName] = useState("")
@@ -28,6 +28,7 @@ export default function Home() {
   const [email, setEmail] = useState("")
   const [career, setCareer] = useState("")
   const [semester, setSemester] = useState(0)
+  const [photo, setPhoto] = useState("")
 
   const [stateAdd, setStateAdd] = useState(false)
   const [stateEdit, setStateEdit] = useState(false)
@@ -49,8 +50,19 @@ export default function Home() {
     getData()
   })
 
+  const getPhoto = async () => {
+    try {
+      const res = await fetch("https://picsum.photos/200");
+      const data = await res;
+      setPhoto(data.url)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const add = async (e) =>{
     e.preventDefault()
+    getPhoto()
     try {
       const database = firebase.firestore()
       const newStudent = {
@@ -66,7 +78,7 @@ export default function Home() {
       setStateAdd(false)
       setList([...list,
         {
-          id:nanoid(), 
+          id:nanoid(),
           name:name,
           lastname:lastname,
           ide:ide,
@@ -152,8 +164,8 @@ export default function Home() {
                 <span className="input-group-text">
                   <FontAwesomeIcon icon={faUser}/>
                 </span>
-                <input 
-                  type="text" className="form-control" 
+                <input
+                  type="text" className="form-control"
                   placeholder="Nombre" required
                   onChange={(e)=>setName(e.target.value)}
                 />
@@ -162,8 +174,8 @@ export default function Home() {
                 <span className="input-group-text">
                   <FontAwesomeIcon icon={faUser}/>
                 </span>
-                <input 
-                  type="text" className="form-control" 
+                <input
+                  type="text" className="form-control"
                   placeholder="Apellido" required
                   onChange={(e)=>setLastName(e.target.value)}
                 />
@@ -172,7 +184,7 @@ export default function Home() {
                 <span className="input-group-text">
                   <FontAwesomeIcon icon={faAddressCard}/>
                 </span>
-                <input 
+                <input
                   type="text" className="form-control" min={1}
                   placeholder="Identificación" required
                   onChange={(e)=>setIde(e.target.value)}
@@ -182,7 +194,7 @@ export default function Home() {
                 <span className="input-group-text">
                   <FontAwesomeIcon icon={faPhoneFlip}/>
                 </span>
-                <input 
+                <input
                   type="number" className="form-control" min={1}
                   placeholder="Teléfono" required
                   onChange={(e)=>setTel(e.target.value)}
@@ -194,8 +206,8 @@ export default function Home() {
                 <span className="input-group-text">
                   <FontAwesomeIcon icon={faEnvelope}/>
                 </span>
-                <input 
-                  type="email" className="form-control" 
+                <input
+                  type="email" className="form-control"
                   placeholder="Email" required
                   onChange={(e)=>setEmail(e.target.value)}
                 />
@@ -204,8 +216,8 @@ export default function Home() {
                 <span className="input-group-text">
                   <FontAwesomeIcon icon={faUserGraduate}/>
                 </span>
-                <input 
-                  type="text" className="form-control" 
+                <input
+                  type="text" className="form-control"
                   placeholder="Carrera" required
                   onChange={(e)=>setCareer(e.target.value)}
                 />
@@ -214,7 +226,7 @@ export default function Home() {
                 <span className="input-group-text">
                   <FontAwesomeIcon icon={faUserGraduate}/>
                 </span>
-                <input 
+                <input
                   type="number" className="form-control" min={1} max={10}
                   placeholder="Semestre" required
                   onChange={(e)=>setSemester(e.target.value)}
@@ -251,7 +263,7 @@ export default function Home() {
                   stateEdit && stu.id===id ?
                   <>
                     <td>
-                      <input 
+                      <input
                         type="text" className="form-control" value={name}
                         onChange={(e)=>setName(e.target.value)}
                       />
@@ -260,50 +272,50 @@ export default function Home() {
                       }
                     </td>
                     <td>
-                      <input 
+                      <input
                         type="text" className="form-control" value={lastname}
                         onChange={(e)=>setLastName(e.target.value)}
                       />
                     </td>
                     <td>
-                      <input 
+                      <input
                         type="text" className="form-control" value={ide}
                         onChange={(e)=>setIde(e.target.value)}
                       />
                     </td>
                     <td>
-                      <input 
+                      <input
                         type="text" className="form-control" value={tel}
                         onChange={(e)=>setTel(e.target.value)}
                       />
                     </td>
                     <td>
-                      <input 
+                      <input
                         type="text" className="form-control" value={email}
                         onChange={(e)=>setEmail(e.target.value)}
                       />
                     </td>
                     <td>
-                    <input 
+                    <input
                         type="text" className="form-control" value={career}
                         onChange={(e)=>setCareer(e.target.value)}
                       />
                     </td>
                     <td>
-                      <input 
+                      <input
                         type="text" className="form-control" value={semester}
                         onChange={(e)=>setSemester(e.target.value)}
                       />
                     </td>
                     <td className="buttons">
-                      <FontAwesomeIcon 
-                        icon={faCircleCheck} type="button" 
-                        className="pe-2 fs-4 text-success" title="Editar" 
+                      <FontAwesomeIcon
+                        icon={faCircleCheck} type="button"
+                        className="pe-2 fs-4 text-success" title="Editar"
                         onClick={()=>{editStudent(stu.id)}}
                       />
-                      <FontAwesomeIcon 
-                        icon={faCircleXmark} type="button" 
-                        className="fs-4 text-danger" title="Cancelar" 
+                      <FontAwesomeIcon
+                        icon={faCircleXmark} type="button"
+                        className="fs-4 text-danger" title="Cancelar"
                         onClick={()=>{setStateEdit(!stateEdit); setError(false)}}
                       />
                     </td>
@@ -318,13 +330,13 @@ export default function Home() {
                     <td>{stu.career}</td>
                     <td>{stu.semester}</td>
                     <td>
-                      <FontAwesomeIcon 
-                        icon={faUserPen} type="button" 
-                        className="pe-2 fs-5 text-primary" title="Editar" 
+                      <FontAwesomeIcon
+                        icon={faUserPen} type="button"
+                        className="pe-2 fs-5 text-primary" title="Editar"
                         onClick={()=>{setId(stu.id); auxEdit(stu)}}
                       />
-                      <FontAwesomeIcon 
-                        icon={faTrashCan} type="button" 
+                      <FontAwesomeIcon
+                        icon={faTrashCan} type="button"
                         className="fs-5 text-danger" title="Eliminar"
                         onClick={()=>deleteStudent(stu.id)}
                       />
