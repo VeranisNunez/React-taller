@@ -252,6 +252,7 @@ export default function Home() {
             <th scope="col">Email</th>
             <th scope="col">Carrera</th>
             <th scope="col">Semestre</th>
+            <th scope="col">Photo</th>
             <th scope="col">Gestión</th>
           </tr>
         </thead>
@@ -331,6 +332,7 @@ export default function Home() {
                     <td>{stu.email}</td>
                     <td>{stu.career}</td>
                     <td>{stu.semester}</td>
+                    <td><img src={stu.photo} alt="img"/></td>
                     <td>
                       <FontAwesomeIcon
                         icon={faUserPen} type="button"
