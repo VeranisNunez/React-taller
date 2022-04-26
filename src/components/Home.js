@@ -53,8 +53,7 @@ export default function Home() {
   const getPhoto = async () => {
     try {
       const res = await fetch("https://picsum.photos/200");
-      const data = await res;
-      setPhoto(data.url)
+      setPhoto(res.url)
     } catch (error) {
       console.log(error);
     }
@@ -252,7 +251,7 @@ export default function Home() {
             <th scope="col">Email</th>
             <th scope="col">Carrera</th>
             <th scope="col">Semestre</th>
-            <th scope="col">Photo</th>
+            <th scope="col">Foto</th>
             <th scope="col">Gestión</th>
           </tr>
         </thead>
@@ -332,7 +331,7 @@ export default function Home() {
                     <td>{stu.email}</td>
                     <td>{stu.career}</td>
                     <td>{stu.semester}</td>
-                    <td><img src={stu.photo} alt="img"/></td>
+                    <td><img src={stu.photo} alt="img" height={50} width={50}/></td>
                     <td>
                       <FontAwesomeIcon
                         icon={faUserPen} type="button"
